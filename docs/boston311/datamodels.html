@@ -123,7 +123,7 @@ class Services(BaseModel):
 
 
 class Status(str, Enum):
-    &#34;&#34;&#34;Possible statuses of service requests.&#34;&#34;&#34;
+    &#34;&#34;&#34;Possible status of a service requests.&#34;&#34;&#34;
 
     OPEN = &#34;open&#34;
     CLOSED = &#34;closed&#34;
@@ -620,13 +620,13 @@ class ServiceRequests(BaseModel):
 <span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Possible statuses of service requests.</p></div>
+<div class="desc"><p>Possible status of a service requests.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Status(str, Enum):
-    &#34;&#34;&#34;Possible statuses of service requests.&#34;&#34;&#34;
+    &#34;&#34;&#34;Possible status of a service requests.&#34;&#34;&#34;
 
     OPEN = &#34;open&#34;
     CLOSED = &#34;closed&#34;</code></pre>
