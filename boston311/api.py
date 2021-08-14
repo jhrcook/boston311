@@ -5,7 +5,7 @@ from typing import Optional
 import requests
 
 from .constants import BOSTON_API_ENDPOINT
-from .datamodels import ServiceRequests, Services, Status
+from .datamodels import ServiceRequest, ServiceRequests, Services, Status
 
 
 def get_services() -> Services:
@@ -23,9 +23,40 @@ def get_services() -> Services:
     return Services(services=res.json())
 
 
-# Query the current status of an individual request
-# def get_service_request(service_request_id: str) -> ServiceRequest:
-#     pass
+class UnexpectedNumberOfResultsError(BaseException):
+    """Unexpected number of results error."""
+
+    def __init__(self, n_expected: int, n_received: int) -> None:
+        """Initialize an UnexpectedNumberOfResultsError error.
+
+        Args:
+            n_expected (int): Number of expected results.
+            n_received (int): Number of received results.
+        """
+        self.n_expected = n_expected
+        self.n_received = n_received
+        self.message = f"Expected {n_expected} but received {n_received}"
+        super().__init__(self.message)
+
+
+def get_service_request(service_request_id: str) -> Optional[ServiceRequest]:
+    """Query the current status of an individual request.
+
+    Args:
+        service_request_id (str): Service request ID.
+
+    Returns:
+        ServiceRequest: The service request information.
+    """
+    res = requests.get(BOSTON_API_ENDPOINT + f"requests/{service_request_id}.json")
+    if res.status_code != 200:
+        raise requests.HTTPError(res)
+    results = res.json()
+    if len(results) == 0:
+        return None
+    elif len(results) > 1:
+        raise UnexpectedNumberOfResultsError(n_expected=1, n_received=len(results))
+    return ServiceRequest(**results[0])
 
 
 def _format_in_utc(dt: datetime) -> str:
@@ -113,6 +144,5 @@ def get_service_requests(
 
     res = requests.get(BOSTON_API_ENDPOINT + "requests.json", params=params)
     if res.status_code != 200:
-        print(f"Failed request - status code {res.status_code}")
         raise requests.HTTPError(res)
     return ServiceRequests(service_requests=res.json())

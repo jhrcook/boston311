@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 import pytest
+from requests import HTTPError
 
 from boston311 import api
 from boston311.datamodels import Status
@@ -16,6 +17,25 @@ def test_get_services():
 def test_get_service_requests():
     services_req = api.get_service_requests()
     assert len(services_req.service_requests) > 1
+
+
+@pytest.mark.network
+def test_get_service_request_fails():
+    fake_service_code = "A!"
+    with pytest.raises(HTTPError):
+        api.get_service_request(fake_service_code)
+
+
+@pytest.mark.dev
+def test_get_service_request():
+    my_service_request_id = "101003910915"
+    service_req = api.get_service_request(my_service_request_id)
+    assert service_req is not None
+    assert service_req.service_request_id == my_service_request_id
+    assert service_req.address == "114 Queensberry St West Fens"
+    assert service_req.service_name == "Illegal Graffiti"
+    assert service_req.address_id is None
+    assert service_req.media_url is None
 
 
 @pytest.mark.network
