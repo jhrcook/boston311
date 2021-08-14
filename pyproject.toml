@@ -28,6 +28,7 @@ test = [
     "factory-boy >=3.2",
 ]
 dev = ["flit >=3.3", "keyring >=23.0", "tox >=3.24"]
+doc = ["pdoc3"]
 
 [project.urls]
 Source = "https://github.com/jhrcook/boston311"
