@@ -8,7 +8,13 @@ authors = [{ name = "Joshua Cook", email = "joshuacook0023@gmail.com" }]
 home-page = "https://github.com/jhrcook/boston311"
 readme = "README.md"
 classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities",
+    "Typing :: Typed",
 ]
 dynamic = ["version", "description"]
 dependencies = ["requests >=2.25", "pydantic >=1.8"]
