@@ -1,11 +1,13 @@
 """Interacting with the Boston 311 API."""
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Optional
 
 import requests
 
 from .constants import BOSTON_API_ENDPOINT
 from .datamodels import ServiceRequest, ServiceRequests, Services, Status
+from .exceptions import UnexpectedNumberOfResultsError
+from .service_request_parameters import ServiceRequestParameters
 
 
 def get_services() -> Services:
@@ -21,22 +23,6 @@ def get_services() -> Services:
     if res.status_code != 200:
         raise requests.HTTPError(res)
     return Services(services=res.json())
-
-
-class UnexpectedNumberOfResultsError(BaseException):
-    """Unexpected number of results error."""
-
-    def __init__(self, n_expected: int, n_received: int) -> None:
-        """Initialize an UnexpectedNumberOfResultsError error.
-
-        Args:
-            n_expected (int): Number of expected results.
-            n_received (int): Number of received results.
-        """
-        self.n_expected = n_expected
-        self.n_received = n_received
-        self.message = f"Expected {n_expected} but received {n_received}"
-        super().__init__(self.message)
 
 
 def get_service_request(service_request_id: str) -> Optional[ServiceRequest]:
@@ -57,53 +43,6 @@ def get_service_request(service_request_id: str) -> Optional[ServiceRequest]:
     elif len(results) > 1:
         raise UnexpectedNumberOfResultsError(n_expected=1, n_received=len(results))
     return ServiceRequest(**results[0])
-
-
-def _format_in_utc(dt: datetime) -> str:
-    if dt.tzinfo is None:
-        dt.replace(tzinfo=timezone.utc)
-    elif dt.tzinfo is not timezone.utc:
-        dt = dt.astimezone(timezone.utc)
-    return dt.strftime("%Y-%m-%dT%H:%M:%S") + "Z"
-
-
-class ServiceRequestParameters:
-    """Parameters for a GET request for service requests."""
-
-    service_code: Optional[str]
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
-    status: Optional[Status]
-
-    def __init__(
-        self,
-        service_code: Optional[str],
-        start_date: Optional[datetime],
-        end_date: Optional[datetime],
-        status: Optional[Status],
-    ) -> None:
-        self.service_code = service_code
-        self.start_date = start_date
-        self.end_date = end_date
-        self.status = status
-
-    def get_params(self) -> dict[str, str]:
-        """Get a dictionary of the parameters for the request."""
-        if self.end_date is None and self.start_date is not None:
-            self.end_date = datetime.now(tz=timezone.utc)
-
-        params: dict[str, str] = {}
-
-        if self.service_code is not None:
-            params["service_code"] = self.service_code
-        if self.start_date is not None:
-            params["start_date"] = _format_in_utc(self.start_date)
-        if self.end_date is not None:
-            params["end_date"] = _format_in_utc(self.end_date)
-        if self.status is not None:
-            params["status"] = self.status
-
-        return params
 
 
 def get_service_requests(

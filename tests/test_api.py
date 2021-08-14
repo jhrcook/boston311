@@ -26,7 +26,7 @@ def test_get_service_request_fails():
         api.get_service_request(fake_service_code)
 
 
-@pytest.mark.dev
+@pytest.mark.network
 def test_get_service_request():
     my_service_request_id = "101003910915"
     service_req = api.get_service_request(my_service_request_id)
@@ -51,7 +51,7 @@ def test_get_service_requests_with_code(service_code: str, more_than_zero: bool)
 @pytest.mark.parametrize(
     "start_date, more_than_zero",
     (
-        [datetime.now() - timedelta(days=10), True],
+        [datetime.now() - timedelta(days=5), True],
         [datetime.now() + timedelta(days=3), False],
     ),
 )
@@ -64,12 +64,12 @@ def test_get_service_requests_with_start(start_date: datetime, more_than_zero: b
 @pytest.mark.parametrize(
     "end_date, more_than_zero",
     (
-        [datetime.now() - timedelta(days=11), False],
+        [datetime.now() - timedelta(days=6), False],
         [datetime.now(), True],
     ),
 )
 def test_get_service_requests_with_end(end_date: datetime, more_than_zero: bool):
-    start_date = datetime.now() - timedelta(days=10)
+    start_date = datetime.now() - timedelta(days=5)
     services_req = api.get_service_requests(start_date=start_date, end_date=end_date)
     assert (len(services_req.service_requests) > 0) == more_than_zero
 
