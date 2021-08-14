@@ -43,3 +43,10 @@ repos:
     rev: 3.9.2
     hooks:
     -   id: flake8
+-   repo: local
+    hooks:
+    -   id: pdoc
+        name: pdoc
+        language: system
+        entry: tox -e doc
+        types: [python]

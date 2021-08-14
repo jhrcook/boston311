@@ -3,11 +3,13 @@
 **Python package for interfacing with Boston 311 API.**
 
 [![python](https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=FFFF9A)](https://www.python.org)
+[![PyPI version](https://badge.fury.io/py/boston311.svg)](https://badge.fury.io/py/boston311)
+![downloads](https://crate.io/packages/boston311) <br>
 [![pytest](https://github.com/jhrcook/boston311/actions/workflows/test.yaml/badge.svg)](https://github.com/jhrcook/boston311/actions/workflows/test.yaml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
-[![pydocstyle](https://img.shields.io/badge/pydocstyle-enabled-AD4CD3)](http://www.pydocstyle.org/en/stable/)
+[![pydocstyle](https://img.shields.io/badge/pydocstyle-enabled-AD4CD3)](http://www.pydocstyle.org/en/stable/) <br>
 [![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 I recently made a request to have some graffiti removed by the city of Boston and used their 311 service for reporting non-emergency crimes.

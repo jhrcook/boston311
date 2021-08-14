@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>boston311 API documentation</title>
-<meta name="description" content="Access service request data from the Boston 311 API." />
+<meta name="description" content="Access service request data from the Boston 311 API …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -24,11 +24,117 @@
 </header>
 <section id="section-intro">
 <p>Access service request data from the Boston 311 API.</p>
+<h1 id="bostons-311-service-api">Boston's 311 Service API</h1>
+<p><strong>Python package for interfacing with Boston 311 API.</strong></p>
+<p><a href="https://www.python.org"><img alt="python" src="https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&amp;logo=python&amp;logoColor=FFFF9A"></a>
+<a href="https://badge.fury.io/py/boston311"><img alt="PyPI version" src="https://badge.fury.io/py/boston311.svg"></a>
+<img alt="downloads" src="https://crate.io/packages/boston311"> <br>
+<a href="https://github.com/jhrcook/boston311/actions/workflows/test.yaml"><img alt="pytest" src="https://github.com/jhrcook/boston311/actions/workflows/test.yaml/badge.svg"></a>
+<a href="https://github.com/pre-commit/pre-commit"><img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&amp;logoColor=white"></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+<a href="http://mypy-lang.org/"><img alt="Checked with mypy" src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
+<a href="http://www.pydocstyle.org/en/stable/"><img alt="pydocstyle" src="https://img.shields.io/badge/pydocstyle-enabled-AD4CD3"></a> <br>
+<a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPLv3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a></p>
+<p>I recently made a request to have some graffiti removed by the city of Boston and used their 311 service for reporting non-emergency crimes.
+I found it an interesting service and
+decided to look closer into it.
+They provide an free API for the service, so I decided to make this Python package to interface with the API.</p>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="installation">Installation</h3>
+<p>Install the <code><a title="boston311" href="#boston311">boston311</a></code> package through PyPI.</p>
+<pre><code class="language-bash">pip install boston311
+</code></pre>
+<h3 id="features">Features</h3>
+<p>Below are features of this package:</p>
+<ol>
+<li>Get a collection of all services offered by Boston 311.</li>
+<li>Get a collection of all service requests with some useful filters.</li>
+<li>Get information for a specific service request.</li>
+</ol>
+<p>All underlying data models were <strong>parsed and validated with <a href="https://pydantic-docs.helpmanual.io">'pydantic'</a></strong> so there is increased type safety and helpful hints for your IDE.</p>
+<h3 id="examples">Examples</h3>
+<h4 id="collection-of-available-services">Collection of available services</h4>
+<p>Use the <code>get_services()</code> function to get a collection of all of the available services offered through the 311 service.
+The returned object contains a field <code>services</code> which is a list of the services.</p>
+<p>In the example below, I make the request, show how many services are available, and print out the third service in the list.
+Finally, I demonstrate a convenience method I added to make a list of the names of the services.</p>
+<pre><code class="language-python">import boston311
+
+available_services = boston311.get_services()
+
+print(available_services)
+#&gt; 22 available services
+type(available_services)
+#&gt; &lt;class 'boston311.datamodels.Services'&gt;
+len(available_services)
+#&gt; 22
+print(available_services[2])
+#&gt; {
+#&gt;      'description': 'Graffiti Removal Request',
+#&gt;      'group': 'Illegal Graffiti',
+#&gt;      'metadata': 'True',
+#&gt;      'service_code': '4f38920fe75084437f0001b3',
+#&gt;      'service_name': 'Illegal Graffiti',
+#&gt;      'type': 'batch',
+#&gt;      'version': 1
+#&gt; }
+print(available_services.list_service_names())
+#&gt; ['Residential Trash out Illegally', 'Broken Sidewalk', ..., 'Abandoned Vehicle']
+</code></pre>
+<h4 id="collection-of-service-requests">Collection of service requests</h4>
+<p>It is easy to get a collection of all service requests made in the last 90 days (the default date range).
+There are also some useful <a href="https://jhrcook.github.io/boston311/api.html#boston311.api.get_service_requests">filters</a> for indicating types of service requests, date ranges, and the status of the request.</p>
+<pre><code class="language-python">import boston311
+
+service_requests = boston311.get_service_requests()
+print(service_requests)
+#&gt; 50 service requests
+</code></pre>
+<h4 id="information-for-a-known-service-request">Information for a known service request</h4>
+<p>Finally, it is very fast to get the information for a single known service request.
+Below is an example of a random request I found on the website.</p>
+<pre><code class="language-python">import boston311
+
+service_request = boston311.get_service_request(&quot;101003914012&quot;)
+print(service_request)
+#&gt; {
+#&gt;    'address': '335 Gallivan Blvd, 1, Dorchester',
+#&gt;    'address_id': None,
+#&gt;    'agency_responsible': None,
+#&gt;    'description': 'Dead cat',
+#&gt;    'expected_datetime': None,
+#&gt;    'lat': 42.28033447265625,
+#&gt;    'long': -71.06434967989543,
+#&gt;    'media_url': None,
+#&gt;    'requested_datetime': datetime.datetime(2021, 8, 14, 12, 19, 13, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=72000))),
+#&gt;    'service_code': '4f389210e75084437f0001c4',
+#&gt;    'service_name': 'Dead Animal Pick-up',
+#&gt;    'service_notice': None,
+#&gt;    'service_request_id': '101003914012',
+#&gt;    'status': &lt;Status.OPEN: 'open'&gt;,
+#&gt;    'status_notes': None,
+#&gt;    'updated_datetime': datetime.datetime(2021, 8, 14, 12, 19, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=72000))),
+#&gt;    'version': 1,
+#&gt;    'zipcode': None
+#&gt;}
+</code></pre>
+<h3 id="limitations">Limitations</h3>
+<p>There are some parts of the API that I have not included in this package (e.g. the ability to make a new service request submission) because I do not currently need them.
+However, they are likely simple enough to add, so if you want them, either implement them yourself and submit a PR or open and <a href="https://github.com/jhrcook/boston311/issues">Issue</a> and I will eventually take care of it.</p>
+<h2 id="api-documentation">API Documentation</h2>
+<p>Below are links to the documentation for the original API.</p>
+<ul>
+<li><a href="https://mayors24.cityofboston.gov/open311">API website</a></li>
+<li><a href="http://wiki.open311.org/GeoReport_v2/">API docs</a></li>
+</ul>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;Access service request data from the Boston 311 API.&#34;&#34;&#34;
+<pre><code class="python">&#34;&#34;&#34;Access service request data from the Boston 311 API.
+
+.. include:: ../README.md
+&#34;&#34;&#34;
 
 from .api import get_service_request, get_service_requests, get_services  # noqa: F401
 
@@ -74,7 +180,24 @@ __version__ = &#34;0.1.1&#34;</code></pre>
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#bostons-311-service-api">Boston's 311 Service API</a><ul>
+<li><a href="#quick-start">Quick start</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#collection-of-available-services">Collection of available services</a></li>
+<li><a href="#collection-of-service-requests">Collection of service requests</a></li>
+<li><a href="#information-for-a-known-service-request">Information for a known service request</a></li>
+</ul>
+</li>
+<li><a href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li><a href="#api-documentation">API Documentation</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
