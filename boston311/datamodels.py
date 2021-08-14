@@ -3,9 +3,14 @@
 import pprint
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel, HttpUrl
+
+
+def _pprint_format(d: dict[Any, Any], indent: int = 4) -> str:
+    pp = pprint.PrettyPrinter(indent=4)
+    return pp.pformat(d)
 
 
 class Service(BaseModel):
@@ -21,8 +26,7 @@ class Service(BaseModel):
 
     def __str__(self) -> str:
         """String representation."""
-        pp = pprint.PrettyPrinter(indent=4)
-        return pp.pformat(self.dict())
+        return _pprint_format(self.dict())
 
     def __hash__(self) -> int:
         """Hash of a service based on its service code."""
@@ -89,7 +93,7 @@ class Services(BaseModel):
 
 
 class Status(str, Enum):
-    """Possible statuses of service requests."""
+    """Possible status of a service requests."""
 
     OPEN = "open"
     CLOSED = "closed"
@@ -117,6 +121,10 @@ class ServiceRequest(BaseModel):
     service_notice: Optional[str]
     expected_datetime: Optional[datetime]
 
+    def __str__(self) -> str:
+        """String representation."""
+        return _pprint_format(self.dict())
+
     def __hash__(self) -> int:
         """Hash of a service request based on its service ID."""
         return hash(self.service_request_id)
@@ -130,7 +138,7 @@ class ServiceRequests(BaseModel):
 
     def __repr__(self) -> str:
         """String representation."""
-        return f"{len(self)} available services"
+        return f"{len(self)} service requests"
 
     def __str__(self) -> str:
         """String representation."""

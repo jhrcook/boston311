@@ -1,5 +1,14 @@
 name: pytest
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 4 * * MON'
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
 jobs:
   test:
     runs-on: ubuntu-latest
