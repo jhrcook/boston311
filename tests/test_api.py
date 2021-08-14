@@ -28,12 +28,12 @@ def test_get_service_request_fails():
 
 @pytest.mark.network
 def test_get_service_request():
-    my_service_request_id = "101003910915"
+    my_service_request_id = "101003914012"
     service_req = api.get_service_request(my_service_request_id)
     assert service_req is not None
     assert service_req.service_request_id == my_service_request_id
-    assert service_req.address == "114 Queensberry St West Fens"
-    assert service_req.service_name == "Illegal Graffiti"
+    assert service_req.address == "335 Gallivan Blvd, 1, Dorchester"
+    assert service_req.service_name == "Dead Animal Pick-up"
     assert service_req.address_id is None
     assert service_req.media_url is None
 
