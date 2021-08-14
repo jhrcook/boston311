@@ -23,17 +23,18 @@ repos:
     rev: v0.910
     hooks:
     -   id: mypy
-        additional_dependencies: [pydantic, types-PyYAML, types-python-dateutil, types-requests]
+        additional_dependencies: [pydantic, types-PyYAML, types-python-dateutil, types-requests, types-pytz]
 -   repo: https://github.com/psf/black
     rev: 21.7b0
     hooks:
     -   id: black
-# -   repo: https://github.com/PyCQA/pydocstyle
-#     rev: 6.1.1
-#     hooks:
-#     -   id: pydocstyle
-#         types: [python]
-#         args: ["--convention", "google", "--add-ignore", "D301"]
+-   repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.1.1
+    hooks:
+    -   id: pydocstyle
+        types: [python]
+        files: "boston311/.*"
+        args: ["--convention", "google", "--add-ignore", "D301"]
 -   repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
