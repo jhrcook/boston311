@@ -1,5 +1,7 @@
 # Boston's 311 Service API
 
+**Python package for interfacing with Boston 311 API.**
+
 [![python](https://img.shields.io/badge/Python-3.9.6-3776AB.svg?style=flat&logo=python&logoColor=FFFF9A)](https://www.python.org)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -58,7 +60,6 @@ service_request = boston311.get_service_request("101003914012")
 print(service_request)
 #> TODO: add result after formatting function
 ```
-
 
 ## Documentation
 

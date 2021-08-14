@@ -4,10 +4,12 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "boston311"
-authors = [{name = "Joshua Cook", email = "joshuacook0023@gmail.com"}]
+authors = [{ name = "Joshua Cook", email = "joshuacook0023@gmail.com" }]
 home-page = "https://github.com/jhrcook/boston311"
 readme = "README.md"
-classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+]
 dynamic = ["version", "description"]
 dependencies = [
     "requests >=2.25",
@@ -16,21 +18,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = [
-    "pytest >=6.2",
-    "pytest-cov >=2.12",
-    "pytest-sugar >=0.9",
-    "tox >=3.24"
-]
-dev = [
-    "flit >=3.3",
-    "keyring >=23.0",
-    "tox >=3.24"
-]
+test = ["pytest >=6.2", "pytest-cov >=2.12", "pytest-sugar >=0.9", "tox >=3.24"]
+dev = ["flit >=3.3", "keyring >=23.0", "tox >=3.24"]
 
 [project.urls]
 # Documentation = "https://flit.readthedocs.io/en/latest/"
-Source = "https://github.com/takluyver/flit"
-
-# [project.scripts]
-# flit = "flit:main"  # see example on GitHub -> causes flit/__init__.py:main() to be called
+Source = "https://github.com/jhrcook/boston311"
