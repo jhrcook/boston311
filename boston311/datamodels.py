@@ -26,7 +26,7 @@ class Services(BaseModel):
     services: list[Service]
 
 
-class Status(Enum):
+class Status(str, Enum):
     OPEN = "open"
     CLOSED = "closed"
 

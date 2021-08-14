@@ -74,6 +74,7 @@ def get_services() -> Services:
     groups = set([s.group for s in services.services])
     print(f"Number of groups: {len(groups)}")
     print(groups)
+    print(services.services[:5])
     return services
 
 
@@ -93,4 +94,4 @@ def get_services_requests() -> ServiceRequests:
 
 
 if __name__ == "__main__":
-    get_services_requests()
+    get_services()
