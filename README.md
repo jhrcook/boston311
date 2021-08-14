@@ -3,6 +3,7 @@
 **Python package for interfacing with Boston 311 API.**
 
 [![python](https://img.shields.io/badge/Python-3.9.6-3776AB.svg?style=flat&logo=python&logoColor=FFFF9A)](https://www.python.org)
+[![pytest](https://github.com/jhrcook/boston311/actions/workflows/test.yaml/badge.svg)](https://github.com/jhrcook/boston311/actions/workflows/test.yaml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
