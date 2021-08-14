@@ -31,4 +31,4 @@ dev = [
 Source = "https://github.com/takluyver/flit"
 
 # [project.scripts]
-# flit = "flit:main"
+# flit = "flit:main"  # see example on GitHub -> causes flit/__init__.py:main() to be called
