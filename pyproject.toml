@@ -20,10 +20,12 @@ test = [
     "pytest >=6.2",
     "pytest-cov >=2.12",
     "pytest-sugar >=0.9",
+    "tox >=3.24"
 ]
 dev = [
     "flit >=3.3",
     "keyring >=23.0",
+    "tox >=3.24"
 ]
 
 [project.urls]
