@@ -24,5 +24,6 @@ test = [
 dev = ["flit >=3.3", "keyring >=23.0", "tox >=3.24"]
 
 [project.urls]
-# Documentation = "https://flit.readthedocs.io/en/latest/"
 Source = "https://github.com/jhrcook/boston311"
+Tracker = "https://github.com/jhrcook/boston311/issues"
+# Documentation = "https://flit.readthedocs.io/en/latest/"
