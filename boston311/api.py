@@ -7,7 +7,7 @@ import requests
 from .constants import BOSTON_API_ENDPOINT
 from .datamodels import ServiceRequest, ServiceRequests, Services, Status
 from .exceptions import UnexpectedNumberOfResultsError
-from .service_request_parameters import ServiceRequestParameters
+from .service_requests_parameters import ServiceRequestsParameters
 
 
 def get_services() -> Services:
@@ -74,7 +74,7 @@ def get_service_requests(
         ServiceRequests: Collection of all service requests based on any provided
         criteria.
     """
-    params = ServiceRequestParameters(
+    params = ServiceRequestsParameters(
         service_code=service_code,
         start_date=start_date,
         end_date=end_date,
