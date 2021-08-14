@@ -2,4 +2,4 @@
 
 from .api import get_service_request, get_service_requests, get_services  # noqa: F401
 
-__version__ = "0.1.2"
+__version__ = "0.1.1"

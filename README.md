@@ -16,6 +16,14 @@ They provide an free API for the service, so I decided to make this Python packa
 
 ## Quick start
 
+### Installation
+
+Install the `boston311` package through PyPI.
+
+```bash
+pip install boston311
+```
+
 ### Features
 
 Below are features of this package:
