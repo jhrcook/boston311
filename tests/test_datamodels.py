@@ -10,7 +10,6 @@ class ServiceFactory(factory.Factory):
     class Meta:
         model = dm.Service
 
-    version = 1
     description = factory.Sequence(lambda n: fake.paragraph())
     group = factory.Sequence(lambda n: fake.company())
     metadata = fake.pybool()
@@ -23,8 +22,28 @@ class ServicesFactory(factory.Factory):
     class Meta:
         model = dm.Services
 
-    version = fake.pyint()
     services = [ServiceFactory() for _ in range(11)]
+
+
+class ServiceRequestFactory(factory.Factory):
+    class Meta:
+        model = dm.ServiceRequest
+
+    address = fake.address()
+    lat = fake.pyfloat()
+    long = fake.pyfloat()
+    requested_datetime = fake.date_time()
+    service_code = factory.Sequence(lambda _: fake.iban())
+    service_name = factory.Sequence(lambda n: fake.name() + f" ({n})")
+    service_request_id = factory.Sequence(lambda _: fake.iban())
+    status = dm.Status.OPEN
+
+
+class ServiceRequestsFactory(factory.Factory):
+    class Meta:
+        model = dm.ServiceRequests
+
+    service_requests = [ServiceRequestFactory() for _ in range(21)]
 
 
 #### ---- Service model ---- ####
@@ -87,3 +106,42 @@ def test_get_service_id():
     fake_service.service_name = "Josh"
     services.services.append(fake_service)
     assert services.get_service_name("123") == "Josh"
+
+
+#### ---- ServiceRequest ---- ####
+
+
+def test_service_request_str():
+    service_request = ServiceRequestFactory()
+    assert isinstance(service_request, dm.ServiceRequest)
+    assert isinstance(str(service_request), str)
+
+
+def test_service_request_hash():
+    service_request = ServiceRequestFactory()
+    assert isinstance(service_request, dm.ServiceRequest)
+    assert isinstance(hash(service_request), int)
+    assert hash(service_request) != service_request.service_code
+    assert hash(service_request) != service_request.service_name
+
+
+#### ---- ServiceRequests ---- ####
+
+
+def test_service_requests_str():
+    services = ServiceRequestsFactory()
+    assert isinstance(services, dm.ServiceRequests)
+    assert isinstance(str(services), str)
+
+
+def test_service_requests_len():
+    services = ServiceRequestsFactory()
+    assert isinstance(services, dm.ServiceRequests)
+    assert len(services) == len(services.service_requests)
+
+
+def test_service_resquests_getitem():
+    services = ServiceRequestsFactory()
+    assert isinstance(services, dm.ServiceRequests)
+    for i in range(len(services)):
+        assert services[i] == services.service_requests[i]

@@ -49,7 +49,8 @@ Get a collection of all service requests made in the last 90 days (the default d
 import boston311
 
 service_requests = boston311.get_service_requests()
-# TODO: exmaples
+print(service_requests)
+#> 50 service requests
 ```
 
 Get the information for a known service request.
@@ -59,7 +60,26 @@ import boston311
 
 service_request = boston311.get_service_request("101003914012")
 print(service_request)
-#> TODO: add result after formatting function
+#> {
+#>    'address': '335 Gallivan Blvd, 1, Dorchester',
+#>    'address_id': None,
+#>    'agency_responsible': None,
+#>    'description': 'Dead cat',
+#>    'expected_datetime': None,
+#>    'lat': 42.28033447265625,
+#>    'long': -71.06434967989543,
+#>    'media_url': None,
+#>    'requested_datetime': datetime.datetime(2021, 8, 14, 12, 19, 13, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=72000))),
+#>    'service_code': '4f389210e75084437f0001c4',
+#>    'service_name': 'Dead Animal Pick-up',
+#>    'service_notice': None,
+#>    'service_request_id': '101003914012',
+#>    'status': <Status.OPEN: 'open'>,
+#>    'status_notes': None,
+#>    'updated_datetime': datetime.datetime(2021, 8, 14, 12, 19, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=72000))),
+#>    'version': 1,
+#>    'zipcode': None
+#>}
 ```
 
 ## Documentation
