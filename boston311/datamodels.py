@@ -93,7 +93,7 @@ class Services(BaseModel):
 
 
 class Status(str, Enum):
-    """Possible statuses of service requests."""
+    """Possible status of a service requests."""
 
     OPEN = "open"
     CLOSED = "closed"
